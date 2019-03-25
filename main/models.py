@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.db import models
 
 # Create your models here.
@@ -13,14 +14,14 @@ class Client(models.Model):
     address = models.CharField(max_length=100) # Адресс проживания
 
     def __str__(self):
-       return self.last_name + ' ' + self.first_name + ' ' + self.middle_name + ' | ' + self.address
+       return '{} {} {}, {}'.format(self.last_name, self.first_name, self.middle_name, self.address)
 
 
 class Category(models.Model):
     """
     Категория клиента
     """
-    category = models.CharField(max_length=40)  # Категория
+    category = models.CharField(max_length=40)  # Категория граждан
 
     def __str__(self):
         return self.category
@@ -30,7 +31,7 @@ class Control(models.Model):
     """
     Контроль за передвижением ЛД
     """
-    check_mark = models.CharField(max_length=30) # Статус ЛД
+    check_mark = models.CharField(max_length=30) # Перемещение ЛД
 
     def __str__(self):
         return self.check_mark
