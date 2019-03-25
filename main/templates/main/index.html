@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Картотека личных дел</title>
-</head>
-<body>
-    Главная страница картотеки личных дел
-</body>
-</html>
+{% extends "main/base.html" %}
+
+{% block content %}
+Авторизация
+<form method="post" action="">
+
+	<button name="submit" class="btn btn-primary">Вход</button>
+
+	<input type="hidden" name="next" value="" />
+</form>
+{% endblock content %}
