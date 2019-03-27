@@ -41,7 +41,7 @@ class CardIndex(models.Model):
     """
     Личное дело
     """
-    ipd = models.IntegerField(max_length=20, verbose_name='Индивидуальное порядковое дело')
+    ipd = models.IntegerField(verbose_name='Индивидуальное порядковое дело')
     client = models.ForeignKey(Client, verbose_name='Клиент')
     category = models.ForeignKey(Category, verbose_name='Категория клиента')
     control = models.ForeignKey(Control, default=1, verbose_name='Движение ЛД')
