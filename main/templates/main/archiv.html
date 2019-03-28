@@ -33,12 +33,23 @@
 </div>
 <hr>
 <div class="row" align="left">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <ul>
             {% for i in data_search %}
             <li>{{ i }}</li>
             {% endfor %}
         </ul>
+    </div>
+    <div class="col-md-6">
+        <form action="" method="post">
+            <p><select>
+            <option selected disabled>Изменить статус</option>
+            <option value="в архив">В архив</option>
+            <option value="передан специалисту">Передать специалисту</option>
+            <option value="удалить">Удалить</option>
+            </select></p>
+            <p><input type="submit" value="Отправить"></p>
+        </form>
     </div>
 </div>
 {% endblock content %}
