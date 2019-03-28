@@ -9,4 +9,4 @@ from django.contrib.auth import logout
 def logout_view(request):
     """Завершает сеанс работы с приложением."""
     logout(request)
-    return HttpResponseRedirect(reverse('main:index'))
+    return HttpResponseRedirect(reverse('main:main'))

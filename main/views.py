@@ -1,7 +1,15 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
-def index(request):
+@login_required
+def main(request):
     """Домашняя страница картотеки"""
-    return render(request, 'main/index.html')
+    menu = []
+    groups = [str(x) for x in request.user.groups.all()]
+    if request.user.is_superuser:
+        return render(request, 'main/admin.html')
+    if "Архивариус" in groups:
+        return render(request, 'main/archiv.html')
+    if "Специалист" in groups:
+        return render(request, 'main/spec.html')

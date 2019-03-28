@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     # Домашняя страница
-    url(r'^$', views.index, name='index'),
+    url(r'^$', views.main, name='main'),
 ]
