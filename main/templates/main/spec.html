@@ -1,10 +1,11 @@
 {% extends "main/base.html" %}
 
 {% block title %}
-    Картотека личных дел | Рабочее место специалиста
+    {% block name %} | Рабочее место специалиста{% endblock name %}
 {% endblock title%}
 {% block menu %}
     <a class="navbar-brand" href="">Запрос ЛД</a>
+    <a class="navbar-brand" href="">Вернуть ЛД</a>
 {% endblock menu %}
 {% block content %}
 

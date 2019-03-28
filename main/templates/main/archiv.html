@@ -1,6 +1,6 @@
 {% extends "main/base.html" %}
     {% block title %}
-        Картотека личных дел | Рабочее место архивариуса
+        {% block name %} | Рабочее место архивариуса{% endblock name %}
     {% endblock title%}
 {% block menu %}
     <a class="navbar-brand" href="">Запрос ЛД</a>
@@ -11,6 +11,35 @@
     <a class="navbar-brand" href=""></a>
 {% endblock menu %}
 {% block content %}
-
+<div class="row" align="left">
+    <div class="col-md-1">
+        <ul>
+            <li>ИПД:</li>
+        </ul>
+    </div>
+    <div class="col-md-11">
+        <form action="{% url 'main:search' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_ul }}
+            <p>
+                <label for="search"></label>
+                <input id="search" type="text" name="search" value="{{ search_iss }}">
+            </p>
+            <p>
+                <input type="submit" value="Найти">
+            </p>
+        </form>
+    </div>
+</div>
+<hr>
+<div class="row" align="left">
+    <div class="col-md-12">
+        <ul>
+            {% for i in data_search %}
+            <li>{{ i }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock content %}
 

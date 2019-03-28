@@ -1,8 +1,12 @@
 {% extends "users/base.html" %}
+{% block title %}
+    {% block name %} | Авторизация{% endblock name %}
+{% endblock title%}
 {% block content %}
 <div class="container">
         <div style="text-align: center">
-            <h1 style="font-weight: 300;margin-bottom: 20px;font-size: 26pt">Картотека личных дел</h1>
+            <h1 style="font-weight: 300;margin-bottom: 20px;font-size: 26pt">
+                Картотека личных дел ОГКУ "УСЗН по Заларинскому району</h1>
         </div>
         {% if error %}
             <div class="alert alert-danger alert-dismissable" role="alert">
