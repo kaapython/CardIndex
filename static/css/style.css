@@ -1,0 +1,63 @@
+.date {
+    color: grey;
+    padding: 15px;
+    float: right;
+}
+
+footer {
+    background: #EDF0EF;
+    /* border: solid 1px black;*/
+    heigth: 132px;
+    text-align: left;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+main {
+    padding: 0.5%;
+
+}
+
+.menu ul li {
+    display: inline-block;
+}
+
+.menu ul {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul ul {
+    display: none;
+    position: absolute;
+}
+
+.menu li:hover ul {
+    display: block;
+}
+
+.menu li:hover li {
+    display: block;
+}
+
+#raport ul li {
+    display: inline-block;
+}
+
+.menu ul {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+#raport ul ul {
+    display: none;
+    position: absolute;
+}
+
+#raport li:hover ul {
+    display: block;
+}

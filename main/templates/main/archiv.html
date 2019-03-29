@@ -11,46 +11,61 @@
     <a class="navbar-brand" href=""></a>
 {% endblock menu %}
 {% block content %}
-<div class="row" align="left">
-    <div class="col-md-1">
-        <ul>
-            <li>ИПД:</li>
-        </ul>
-    </div>
-    <div class="col-md-11">
-        <form action="{% url 'main:search' %}" method="post">
+<div class="container-fluid">
+<div class="row" align="right">
+    <form action="{% url 'main:search' %}" method="post">
+        <div class="col-md-7" style="margin-left: 10px; width: auto;">
             {% csrf_token %}
-            {{ form.as_ul }}
+            {{ form.as_p }}
             <p>
                 <label for="search"></label>
-                <input id="search" type="text" name="search" value="{{ search_iss }}">
+                <input class="form-control" id="search" type="text" name="search" value="{{ search }}" size="100"
+                       placeholder="Поиск личного дела по ФИО или ИПД, например: Иванов Иван Петрович или 123456"
+                       title="Поиск личного дела по ФИО или ИПД, например: Иванов Иван Петровичили или 123456">
             </p>
-            <p>
-                <input type="submit" value="Найти">
-            </p>
-        </form>
-    </div>
+        </div>
+        <div class="col-md-1" style="float: right;">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Найти</button>
+        </div>
+    </form>
 </div>
 <hr>
 <div class="row" align="left">
     <div class="col-md-6">
-        <ul>
-            {% for i in data_search %}
-            <li>{{ i }}</li>
-            {% endfor %}
-        </ul>
+    {% for i in data_search %}
+        <table class="table">
+<thead class="thead-dark">
+    <tr>
+        <th scope="col">ИПД</th>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Отчество</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <th scope="row">{{ i.ipd }}</th>
+        <td>{{ i.last_name }}</td>
+        <td>{{ i.first_name }}</td>
+        <td>{{ i.middle_name }}</td>
+    </tr>
+</tbody>
+</table>
+    {% endfor %}
     </div>
     <div class="col-md-6">
-        <form action="" method="post">
+        <form action="/" method="post">
+            {% csrf_token %}
             <p><select>
             <option selected disabled>Изменить статус</option>
             <option value="в архив">В архив</option>
             <option value="передан специалисту">Передать специалисту</option>
             <option value="удалить">Удалить</option>
             </select></p>
-            <p><input type="submit" value="Отправить"></p>
+            <button type="submit" value="Изменить">Изменить</button>
         </form>
     </div>
+</div>
 </div>
 {% endblock content %}
 

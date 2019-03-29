@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.db import models
+from users.models import UsersProfile
 
 # Create your models here.
 
@@ -13,8 +14,28 @@ class Client(models.Model):
     bday = models.DateField(auto_now=False, auto_now_add=False) # Дата рождения
     address = models.CharField(max_length=100) # Адресс проживания
 
+    def fio(self) -> str:
+        """
+        Функция возврата полного ФИО
+        :return: Полное ФИО
+        """
+        return '{} {} {}'.format(self.last_name, self.first_name, self.middle_name)
+
+    def shortfio(self, supershort=False) -> str:
+        """
+        Функция возврата сокращенного ФИО
+        :return: Короткое ФИО
+        """
+        if self.middle_name and len(self.middle_name) > 0:
+            r = '{} {}.{}.'.format(self.last_name, self.first_name[0], self.middle_name[0])
+        else:
+            r = '{} {}.'.format(self.last_name, self.first_name[0])
+        if supershort:
+            r = r.replace(". ", "").replace(".", "")
+        return r
+
     def __str__(self):
-       return '{} {} {}, {}'.format(self.last_name, self.first_name, self.middle_name, self.address)
+        return self.fio()
 
 
 class Category(models.Model):
@@ -44,7 +65,8 @@ class CardIndex(models.Model):
     ipd = models.IntegerField(verbose_name='Индивидуальное порядковое дело')
     client = models.ForeignKey(Client, verbose_name='Клиент')
     category = models.ForeignKey(Category, verbose_name='Категория клиента')
-    control = models.ForeignKey(Control, default=1, verbose_name='Движение ЛД')
+    control = models.ForeignKey(Control, default=1, verbose_name='Статус ЛД')
+    spec = models.ForeignKey(UsersProfile, verbose_name='Движение ЛД')
 
     def __str__(self):
-        return 'ИПД: {}. {}, категория: {}'.format(str(self.ipd), str(self.client), str(self.category))
+        return '{} {}'.format(self.ipd, self.client)
