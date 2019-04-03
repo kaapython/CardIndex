@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+{% block title %}
+    {% block name %} | Рабочее место специалиста{% endblock name %}
+{% endblock title%}
+{% block menu %}
+    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
+    <a class="navbar-brand" href="">|</a>
+    <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
+{% endblock menu %}
+{% block content %}
+<div class="container-fluid">
+    <h4 class='f-h' style="text-align: left;">Список ЛД, находящихся в работе специалиста:</h4><br>
+    <div>
+        <table class="table table-bordered floatThead ct">
+        <thead class="thead-dark">
+            <tr>
+                <th class="col-xs-1">ИПД</th>
+                <th class="col-xs-2">ФИО</th>
+                <th class="col-xs-2">Дата рождения</th>
+                <th class="col-xs-2">Адрес проживания</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+    {% for ld in injob %}
+<div class="container-fluid">
+    <div>
+        <table class="table table-bordered floatThead ct">
+        <thead class="thead-dark">
+            <tr>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="col-xs-1">{{ ld.ipd }}</td>
+                <td class="col-xs-2">{{ ld.client }}</td>
+                <td class="col-xs-2">{{ ld.client.bday }}</td>
+                <td class="col-xs-2">{{ ld.client.address }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+    {% endfor %}
+{% endblock content %}

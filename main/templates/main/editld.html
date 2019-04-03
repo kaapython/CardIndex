@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block name %} | Редактирование ЛД{% endblock name %}
+{% endblock title%}
+{% block menu %}
+    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
+    <a class="navbar-brand" href="">|</a>
+    <a class="navbar-brand" href="{% url 'main:search' %}">Поиск ЛД</a>
+{% endblock menu %}
+{% block content %}
+<div class="container-fluid">
+    <div class="panel panel-flt"></div>
+    <h4 class='f-h' style="text-align: left;">Форма редактирование ЛД:</h4>
+    <form action="{% url 'main:edit_ld' ld.id %}" method='post'>
+        {% csrf_token %}
+        <div class="form-group">{{ form.as_p }}</div>
+        <button class="btn btn-lg btn-primary btn-block" name="submit" style="height: 40px;">Сохранить изменения</button>
+    </form>
+</div>
+{% endblock content %}

@@ -4,9 +4,86 @@
     {% block name %} | Рабочее место специалиста{% endblock name %}
 {% endblock title%}
 {% block menu %}
+    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
+    <a class="navbar-brand" href="">|</a>
     <a class="navbar-brand" href="">Запрос ЛД</a>
     <a class="navbar-brand" href="">Вернуть ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:ldinjob' %}">ЛД в работе</a>
 {% endblock menu %}
 {% block content %}
+<div class="container-fluid">
+    <div class="row" align="right">
+        <form action="{% url 'main:search' %}" method="post">
+            <div class="col-md-7" style="margin-left: 10px; width: auto;">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p>
+                    <label for="search"></label>
+                    <input class="form-control" id="search" type="text" name="search" value="{{ search }}" size="100"
+                           placeholder="Поиск личного дела по ФИО или ИПД, например: Иванов Иван Петрович или 123456"
+                           title="Поиск личного дела по ФИО или ИПД, например: Иванов Иван Петровичили или 123456">
+                </p>
+            </div>
+            <div class="col-md-1" style="float: right;">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Найти</button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div class="row" align="left">
+        <div class="col-md-9">
+        {% for i in data_search %}
+            <table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ИПД</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Дата рождения</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Категория</th>
+            <th scope="col">Статус ЛД</th>
+            <th scope="col">Движение ЛД</th>
+            <th scope="col">Изменение ЛД</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{ i.ipd }}</th>
+            <td>{{ i.client.last_name }}</td>
+            <td>{{ i.client.first_name }}</td>
+            <td>{{ i.client.middle_name }}</td>
+            <td>{{ i.client.bday }}</td>
+            <td>{{ i.client.address }}</td>
+            <td>{{ i.category }}</td>
+            <td>{{ i.control }}</td>
 
+            {% if i.control.check_mark == 'в архиве'%}
+            <td></td>
+            {% elif i.control.check_mark == 'передано в др. уч.' %}
+            <td>{{ i.info }}</td>
+            {% else %}
+            <td>{{ i.spec }}</td>
+            {% endif %}
+            <td>
+                <a href="/" class="btn btn-info">Запросить ЛД</a>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+        {% endfor %}
+        </div>
+        <div class="col-md-3">
+            <div id="specialist" onclick="return false" style="display:none;">
+                <form method="post" action="/">
+                    {% for i in spec %}
+                        <input type="checkbox" name="option1" value="a1"> {{ i.fio }}<Br>
+                    {% endfor %}
+                    <p><input id="continue" type="submit" value="Отправить"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

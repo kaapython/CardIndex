@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block name %} | Личное дело{% endblock name %}
+{% endblock title%}
+{% block menu %}
+    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
+    <a class="navbar-brand" href="">|</a>
+    <a class="navbar-brand" href="{% url 'main:search' %}">Поиск ЛД</a>
+{% endblock menu %}
+{% block content %}
+<div class="container-fluid">
+    <div id="table_cont">
+        <table class="table table-bordered floatThead ct" id="log_table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ИПД</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Дата рождения</th>
+                <th scope="col">Адрес</th>
+                <th scope="col">Категория</th>
+                <th scope="col">Статус ЛД</th>
+                <th scope="col">Движение ЛД</th>
+                <th scope="col">Изменение ЛД</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{{ ld.ipd }}</th>
+                <td>{{ ld.client }}</td>
+                <td>{{ ld.client.bday }}</td>
+                <td>{{ ld.client.address }}</td>
+                <td>{{ ld.category }}</td>
+                <td>{{ ld.control }}</td>
+                {% if i.control.check_mark == 'в архиве'%}
+                <td></td>
+                {% elif i.control.check_mark == 'передано в др. уч.' %}
+                <td>{{ i.info }}</td>
+                {% else %}
+                <td>{{ i.spec }}</td>
+                {% endif %}
+                <td>
+                    <a href="{% url 'main:edit_ld' ld.id %}" class="btn btn-info">Перейти в форму редактирования</a>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}

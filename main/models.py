@@ -65,8 +65,9 @@ class CardIndex(models.Model):
     ipd = models.IntegerField(verbose_name='Индивидуальное порядковое дело')
     client = models.ForeignKey(Client, verbose_name='Клиент')
     category = models.ForeignKey(Category, verbose_name='Категория клиента')
-    control = models.ForeignKey(Control, default=1, verbose_name='Статус ЛД')
-    spec = models.ForeignKey(UsersProfile, verbose_name='Движение ЛД')
+    control = models.ForeignKey(Control, verbose_name='Статус ЛД')
+    spec = models.ForeignKey(UsersProfile, default="в архиве", blank=True, verbose_name='Движение ЛД по специалистам')
+    info = models.CharField(max_length=200, blank=True, verbose_name='Движение ЛД по другим УСЗН')
 
     def __str__(self):
         return '{} {}'.format(self.ipd, self.client)

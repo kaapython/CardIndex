@@ -2,10 +2,15 @@ from django.shortcuts import render
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 import re
 
-from main.models import CardIndex, Client
+from main.models import CardIndex, Client, Control
+from users.models import UsersProfile, User
+from main.forms import AddLdForm
+from main.decorators import group_required
 
 # Create your views here.
 @login_required
@@ -23,50 +28,53 @@ def main(request):
 @login_required
 def search(request):
     '''Поиск информации по базе данных для архивариуса'''
+    groups = [str(x) for x in request.user.groups.all()]
+    con = Control.objects.all()
+    spec = UsersProfile.objects.all()
     if request.method == 'POST' and request.POST['search']:
         query = request.POST['search'].strip()
         if query.isdigit():
             search = CardIndex.objects.filter(ipd = query)
         else:
             split = str(query).split()
-            search = Client.objects.filter(last_name=split[0].title(), first_name=split[1].title(), middle_name=split[2].title())
-        #return HttpResponse(serializers.serialize('json', search), content_type="application/json")
-        return render(request, 'main/archiv.html', {'data_search': search})
+            search = CardIndex.objects.filter(client__last_name=split[0].title(),
+                                              client__first_name=split[1].title(),
+                                              client__middle_name=split[2].title())
+        if "Архивариус" in groups:
+            return render(request, 'main/archiv.html', {'data_search': search, 'control': con, 'spec': spec})
+        if "Специалист" in groups:
+            return render(request, 'main/spec.html', {'data_search': search, 'control': con, 'spec': spec})
     else:
         return render(request, 'main/archiv.html')
 
+@login_required
+@group_required("Архивариус")
+def ld(request, ld_id):
+    """Выводит одну тему и все ее записи."""
+    data = CardIndex.objects.get(id=ld_id)
+    context = {'ld': data}
+    return render(request, 'main/ld.html', context)
 
-def ajax_search(request):
-    """ Поиск пациентов """
-    objects = []
-    if request.method == "GET" and request.GET['query'] and request.GET[
-        'type']:  # Проверка типа запроса и наличия полей
-        type = request.GET['type']
-        query = request.GET['query'].strip()
-        p = re.compile(r'[а-я]{3}[0-9]{8}',
-                       re.IGNORECASE)  # Регулярное выражение для определения запроса вида иии10121999
-        p2 = re.compile(
-            r'([А-я]{2,}) ([А-я]{2,}) ([А-я]{0,}) ([0-9]{2}.[0-9]{2}.[0-9]{4})')  # Регулярное выражение для определения запроса вида Иванов Иван Иванович 10.12.1999
-        p3 = re.compile(r'[0-9]{1,10}')  # Регулярное выражение для определения запроса по номеру карты
-        if re.search(p, query):  # Если это краткий запрос
-            initials = query[0:3]
-            btday = query[3:5] + "." + query[5:7] + "." + query[7:11] + " 0:00:00"
-            if type == "all":
-                objects = Importedclients.objects.filter(initials=initials, birthday=btday)[0:10]
-            else:
-                objects = Importedclients.objects.filter(initials=initials, birthday=btday, type=type)[0:10]
-        elif re.search(p2, query):  # Если это полный запрос
-            split = str(query).split()
-            btday = split[3] + " 0:00:00"
-            if type == "all":  # Проверка типа базы, all - поиск по Поликлиннике и по Стационару
-                objects = Importedclients.objects.filter(family=split[0], name=split[1], twoname=split[2],
-                                                         birthday=btday)[0:10]
-            else:
-                objects = Importedclients.objects.filter(family=split[0], name=split[1], twoname=split[2],
-                                                         birthday=btday, type=type)[0:10]
-        elif re.search(p3, query):  # Если это запрос номер карты
-            try:
-                objects = Importedclients.objects.filter(num=int(query), type=type)[0:10]
-            except ValueError:
-                pass
-    return HttpResponse(serializers.serialize('json', objects), content_type="application/json")  # Создание JSON
+@login_required
+@group_required("Архивариус")
+def edit_ld(request, ld_id):
+    """Редактирует существующую запись."""
+    ld = CardIndex.objects.get(id=ld_id)
+    if request.method != 'POST':
+        # Исходный запрос; форма заполняется данными текущей записи.
+        form = AddLdForm(instance=ld)
+    else:
+        # Отправка данных POST; обработать данные.
+        form = AddLdForm(instance=ld, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('main:ld', args=[ld.id]))
+    context = {'ld': ld, 'form': form}
+    return render(request, 'main/editld.html', context)
+
+@login_required
+def ldinjob(request):
+    """Выводит личные дела в работе специалиста"""
+    injob = CardIndex.objects.filter(spec=request.user.usersprofile).order_by('ipd', 'client')
+    return render(request, 'main/injob.html', {'injob': injob})
+
