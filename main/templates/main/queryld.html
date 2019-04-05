@@ -1,0 +1,20 @@
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Запрос ЛД</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td scope="row">
+                <form action="{% url 'main:queryld' %}" method='post'>
+                    {% csrf_token %}
+                    <div id="form_style">
+                    {{ form.as_p }}
+                    <button name="submit" >Запрос</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

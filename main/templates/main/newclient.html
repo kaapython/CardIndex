@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% load bootstrap3 %}
 {% block title %}
-    {% block name %} | Редактирование ЛД{% endblock name %}
+    {% block name %} | Добавление нового клиента{% endblock name %}
 {% endblock title%}
 {% block menu %}
     <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
@@ -9,15 +9,14 @@
     <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
 {% endblock menu %}
 {% block content %}
-<div class="container-fluid">
-    <div style="font-size: 16pt; text-align: left;">Форма редактирования ЛД:</div><br>
-    <form action="{% url 'main:edit_ld' ld.id %}" method='post'>
+<div class="container">
+    <div style="font-size: 16pt; text-align: center;">Форма добавления ЛД:</div><br>
+    <form action="{% url 'main:newclient' %}" method='post'>
         {% csrf_token %}
-    <div id="form_style_editld">
+        <div id="form_style">
         {{ form.as_p }}
-        <button class="btn btn-lg btn-primary btn-block" name="submit" style="width: 300px;">Сохранить изменения</button>
+            <button class="btn btn-lg btn-primary btn-block" name="submit" style="width: 100%;">Добавить клиента</button>
         </div>
     </form>
-
 </div>
 {% endblock content %}

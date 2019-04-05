@@ -9,10 +9,14 @@ import re
 
 from main.models import CardIndex, Client, Control
 from users.models import UsersProfile, User
-from main.forms import AddLdForm
+from main.forms import *
 from main.decorators import group_required
 
 # Create your views here.
+def index(request):
+    """"""
+    return render(request, 'main/index.html')
+
 @login_required
 def main(request):
     """Домашняя страница картотеки"""
@@ -45,7 +49,7 @@ def search(request):
         if "Специалист" in groups:
             return render(request, 'main/spec.html', {'data_search': search, 'control': con, 'spec': spec})
     else:
-        return render(request, 'main/archiv.html')
+        return render(request, 'main/index.html')
 
 @login_required
 @group_required("Архивариус")
@@ -75,6 +79,48 @@ def edit_ld(request, ld_id):
 @login_required
 def ldinjob(request):
     """Выводит личные дела в работе специалиста"""
-    injob = CardIndex.objects.filter(spec=request.user.usersprofile).order_by('ipd', 'client')
+    injob = CardIndex.objects.filter(spec=request.user.usersprofile).order_by('ipd')
     return render(request, 'main/injob.html', {'injob': injob})
 
+@login_required
+@group_required("Архивариус")
+def newld(request):
+    """Добавление нового ЛД"""
+    if request.method != 'POST':
+        form = AddLdForm()
+    else:
+        form = AddLdForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('main:main'))
+
+    context = {'form': form}
+    return render(request, 'main/newld.html', context)
+
+
+@login_required
+@group_required("Архивариус")
+def newclient(request):
+    """Добавление нового клиента"""
+    if request.method != 'POST':
+        form = AddClientForm()
+    else:
+        form = AddClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('main:main'))
+    context = {'form': form}
+    return render(request, 'main/newclient.html', context)
+
+
+def queryld(request):
+    '''Функция запроса ЛД'''
+    if request.method != 'POST':
+        form = AddQueryLdForm()
+    else:
+        form = AddQueryLdForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('main:main'))
+    context = {'form': form}
+    return render(request, 'main/queryld.html', context)

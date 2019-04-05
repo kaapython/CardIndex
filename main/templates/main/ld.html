@@ -6,7 +6,7 @@
 {% block menu %}
     <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
     <a class="navbar-brand" href="">|</a>
-    <a class="navbar-brand" href="{% url 'main:search' %}">Поиск ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
 {% endblock menu %}
 {% block content %}
 <div class="container-fluid">
@@ -32,12 +32,12 @@
                 <td>{{ ld.client.address }}</td>
                 <td>{{ ld.category }}</td>
                 <td>{{ ld.control }}</td>
-                {% if i.control.check_mark == 'в архиве'%}
+                {% if ld.control.check_mark == 'в архиве'%}
                 <td></td>
-                {% elif i.control.check_mark == 'передано в др. уч.' %}
-                <td>{{ i.info }}</td>
+                {% elif ld.control.check_mark == 'передано в др. уч.' %}
+                <td>{{ ld.info }}</td>
                 {% else %}
-                <td>{{ i.spec }}</td>
+                <td>{{ ld.spec }}</td>
                 {% endif %}
                 <td>
                     <a href="{% url 'main:edit_ld' ld.id %}" class="btn btn-info">Перейти в форму редактирования</a>

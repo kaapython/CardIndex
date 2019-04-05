@@ -8,11 +8,11 @@ class Client(models.Model):
     """
     Личное дело клиента
     """
-    last_name = models.CharField(max_length=30) # Фамилия
-    first_name = models.CharField(max_length=30) # Имя
-    middle_name = models.CharField(max_length=30) # Отчество
-    bday = models.DateField(auto_now=False, auto_now_add=False) # Дата рождения
-    address = models.CharField(max_length=100) # Адресс проживания
+    last_name = models.CharField(max_length=30, help_text='Фамилия') # Фамилия
+    first_name = models.CharField(max_length=30, help_text='Имя') # Имя
+    middle_name = models.CharField(max_length=30, help_text='Отчество') # Отчество
+    bday = models.DateField(auto_now=False, auto_now_add=False, help_text='Дата рождения') # Дата рождения
+    address = models.CharField(max_length=100, help_text='Адрес проживания') # Адрес проживания
 
     def fio(self) -> str:
         """
@@ -42,7 +42,7 @@ class Category(models.Model):
     """
     Категория клиента
     """
-    category = models.CharField(max_length=40)  # Категория граждан
+    category = models.CharField(max_length=40, help_text='Категория клиента')  # Категория граждан
 
     def __str__(self):
         return self.category
@@ -52,7 +52,7 @@ class Control(models.Model):
     """
     Контроль за передвижением ЛД
     """
-    check_mark = models.CharField(max_length=30) # Перемещение ЛД
+    check_mark = models.CharField(max_length=30, help_text='Движение ЛД') # Перемещение ЛД
 
     def __str__(self):
         return self.check_mark
@@ -62,12 +62,23 @@ class CardIndex(models.Model):
     """
     Личное дело
     """
-    ipd = models.IntegerField(verbose_name='Индивидуальное порядковое дело')
-    client = models.ForeignKey(Client, verbose_name='Клиент')
-    category = models.ForeignKey(Category, verbose_name='Категория клиента')
-    control = models.ForeignKey(Control, verbose_name='Статус ЛД')
-    spec = models.ForeignKey(UsersProfile, default="в архиве", blank=True, verbose_name='Движение ЛД по специалистам')
-    info = models.CharField(max_length=200, blank=True, verbose_name='Движение ЛД по другим УСЗН')
+    ipd = models.IntegerField(verbose_name='Индивидуальное порядковое дело', help_text='ИПД')
+    client = models.ForeignKey(Client, verbose_name='Клиент', help_text='Клиент')
+    category = models.ForeignKey(Category, verbose_name='Категория клиента', help_text='Категория клиента')
+    control = models.ForeignKey(Control, verbose_name='Статус ЛД', help_text='Статус ЛД')
+    spec = models.ForeignKey(UsersProfile, default="в архиве", blank=True, null=True,
+                             verbose_name='Движение ЛД по специалистам', help_text='Движение ЛД')
+    info = models.CharField(max_length=200, blank=True, verbose_name='Движение ЛД по другим УСЗН',
+                            help_text='Движение по др. УСЗН.')
 
     def __str__(self):
         return '{} {}'.format(self.ipd, self.client)
+
+class Query(models.Model):
+    """
+    Запрос специалиста на работу с ЛД
+    """
+    query_client = models.ForeignKey(CardIndex, blank=True, null=True, help_text='Личное дело')
+    query_spec = models.ForeignKey(UsersProfile, blank=True, null=True, help_text='Специалист')
+    query_ld = models.IntegerField(default=0, help_text='Статус запроса')
+    query_date = models.DateTimeField(default=None, blank=True, null=True, help_text='Время запроса')

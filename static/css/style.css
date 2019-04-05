@@ -61,3 +61,19 @@ main {
 #raport li:hover ul {
     display: block;
 }
+
+#form_style p select {
+    width: 100%;
+}
+
+#form_style p input {
+    width: 100%;
+}
+
+#form_style_editld p input {
+    width: 300px;
+}
+
+#form_style_editld p select {
+    width: 300px;
+}

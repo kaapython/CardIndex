@@ -5,11 +5,11 @@
 {% block menu %}
     <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
     <a class="navbar-brand" href="">|</a>
-    <a class="navbar-brand" href="">Запрос ЛД</a>
+    <a class="navbar-brand" href="">Запросы ЛД</a>
     <a class="navbar-brand" href="">Выдача ЛД</a>
     <a class="navbar-brand" href="">Поиск ЛД</a>
-    <a class="navbar-brand" href=""></a>
-    <a class="navbar-brand" href=""></a>
+    <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить новое ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
 {% endblock menu %}
 {% block content %}
 <div class="container-fluid">
@@ -31,43 +31,59 @@
         </form>
     </div>
     <hr>
+</div>
+<div class="container-fluid">
     <div class="row" align="left">
-        <div class="col-md-9">
-        {% for i in data_search %}
+        <div class="col-md-12">
             <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">ИПД</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Отчество</th>
-            <th scope="col">Дата рождения</th>
-            <th scope="col">Адрес</th>
-            <th scope="col">Категория</th>
-            <th scope="col">Статус ЛД</th>
-            <th scope="col">Движение ЛД</th>
-            <th scope="col">Изменение ЛД</th>
+            <th class="col-xs-1">ИПД</th>
+            <th class="col-xs-1">Фамилия</th>
+            <th class="col-xs-1">Имя</th>
+            <th class="col-xs-1">Отчество</th>
+            <th class="col-xs-1">Дата рождения</th>
+            <th class="col-xs-2">Адрес</th>
+            <th class="col-xs-1">Категория</th>
+            <th class="col-xs-1">Статус ЛД</th>
+            <th class="col-xs-1">Движение ЛД</th>
+            <th id="sel" class="col-xs-1">Изменение ЛД</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th scope="row"><a href="{% url 'main:ld' i.id %}">{{ i.ipd }}</a></th>
-            <td>{{ i.client.last_name }}</td>
-            <td>{{ i.client.first_name }}</td>
-            <td>{{ i.client.middle_name }}</td>
-            <td>{{ i.client.bday }}</td>
-            <td>{{ i.client.address }}</td>
-            <td>{{ i.category }}</td>
-            <td>{{ i.control }}</td>
-
-            {% if i.control.check_mark == 'в архиве'%}
             <td></td>
+        </tr>
+    </tbody>
+    </table>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row" align="left">
+        <div class="col-md-12">
+        {% for i in data_search %}
+            <table class="table">
+    <thead class="thead-dark">
+    </thead>
+    <tbody>
+        <tr>
+            <th class="col-xs-1"><a href="{% url 'main:ld' i.id %}">{{ i.ipd }}</a></th>
+            <td class="col-xs-1">{{ i.client.last_name }}</td>
+            <td class="col-xs-1">{{ i.client.first_name }}</td>
+            <td class="col-xs-1">{{ i.client.middle_name }}</td>
+            <td class="col-xs-1">{{ i.client.bday }}</td>
+            <td class="col-xs-2">{{ i.client.address }}</td>
+            <td class="col-xs-1">{{ i.category }}</td>
+            <td class="col-xs-1">{{ i.control }}</td>
+            {% if i.control.check_mark == 'в архиве'%}
+            <td class="col-xs-1"></td>
             {% elif i.control.check_mark == 'передано в др. уч.' %}
-            <td>{{ i.info }}</td>
+            <td class="col-xs-1">{{ i.info }}</td>
             {% else %}
-            <td>{{ i.spec }}</td>
+            <td class="col-xs-1">{{ i.spec }}</td>
             {% endif %}
-            <td>
+            <td class="col-xs-1">
                 <a href="{% url 'main:ld' i.id %}" class="btn btn-info">Изменить</a>
             </td>
         </tr>
@@ -75,16 +91,14 @@
     </table>
         {% endfor %}
         </div>
-        <div class="col-md-3">
-            <div id="specialist" onclick="return false" style="display:none;">
-                <form method="post" action="/">
-                    {% for i in spec %}
-                        <input type="checkbox" name="option1" value="a1"> {{ i.fio }}<Br>
-                    {% endfor %}
-                    <p><input id="continue" type="submit" value="Отправить"></p>
-                </form>
-            </div>
-        </div>
+    <div id="specialist" onclick="return false" style="display:none">
+        <form method="post" action="/">
+            {% for i in spec %}
+                <input type="checkbox" name="option1" value="a1"> {{ i.fio }}<Br>
+            {% endfor %}
+            <p><input id="continue" type="submit" value="Отправить"></p>
+        </form>
+    </div>
     </div>
 </div>
 
@@ -92,11 +106,8 @@
 {% block script %}
 <script type="text/javascript" src="http://ajax.googleapis.com/..."></script>
 <script type="text/javascript">
-var val_select = $('#sel').val();
 $('#sel').on('click',function(){
-    if (val_select=='передано специалисту'){
         $('#specialist').show();
-    }
 });
 </script>
 {% endblock script %}

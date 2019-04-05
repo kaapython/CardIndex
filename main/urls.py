@@ -6,8 +6,13 @@ from . import views
 urlpatterns = [
     # Домашняя страница
     url(r'^$', views.main, name='main'),
+    url(r'^index$', views.index, name='index'),
     url(r'^archiv$', views.search, name='search'),
     url(r'^archiv/(?P<ld_id>\d+)/$', views.ld, name='ld'),
     url(r'editld/(?P<ld_id>\d+)/$', views.edit_ld, name='edit_ld'),
     url(r'^injob$', views.ldinjob, name='ldinjob'),
+    url(r'^newld$', views.newld, name='newld'),
+    url(r'^newclient$', views.newclient, name='newclient'),
+    url(r'^queryld$', views.queryld, name='queryld'),
+
 ]

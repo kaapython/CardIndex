@@ -4,32 +4,32 @@
 {% endblock title%}
 {% block content %}
 <div class="container">
-        <div style="text-align: center">
-            <h1 style="font-weight: 300;margin-bottom: 20px;font-size: 26pt">
-                Картотека личных дел ОГКУ "УСЗН по Заларинскому району</h1>
-        </div>
-        {% if error %}
-            <div class="alert alert-danger alert-dismissable" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                Неверный логин или пароль
-            </div>
-        {% endif %}
-        <form class="form-signin" action="{% url 'users:login' %}" method='POST'>
-            {% csrf_token %}
-            <div class="panel panel-flt">
-                <div class="panel-heading" style="font-size: 16pt">Авторизация</div>
-                <div class="panel-body">
-                    <input type="text" id="inputLogin" class="form-control" name='username' placeholder="Логин"
-                           value="{{ username }}" required autofocus>
-                    <input type="password" id="inputPassword" class="form-control" name='password' placeholder="Пароль"
-                           required>
-                    <input type="hidden" name="next" value="{% url 'main:main' %}" />
-                    <button class="btn btn-lg btn-primary btn-block" type="submit" style="height: 40px;
-                    width: auto;">Вход</button>
-                </div>
-            </div>
-        </form>
+    <div style="text-align: center">
+        <h1 style="font-weight: 300;margin-bottom: 20px;font-size: 26pt">
+            Картотека личных дел ОГКУ "УСЗН по Заларинскому району</h1>
     </div>
+    {% if error %}
+        <div class="alert alert-danger alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            Неверный логин или пароль
+        </div>
+    {% endif %}
+    <form class="form-signin" action="{% url 'users:login' %}" method='POST'>
+        {% csrf_token %}
+        <div class="panel panel-flt">
+            <div class="panel-heading" style="font-size: 16pt">Авторизация</div>
+            <div class="panel-body">
+                <input type="text" id="inputLogin" class="form-control" name='username' placeholder="Логин"
+                       value="{{ username }}" required autofocus>
+                <input type="password" id="inputPassword" class="form-control" name='password' placeholder="Пароль"
+                       required>
+                <input type="hidden" name="next" value="{% url 'main:main' %}" />
+                <button class="btn btn-lg btn-primary btn-block" type="submit" style="height: 40px;
+                width: auto;">Вход</button>
+            </div>
+        </div>
+    </form>
+</div>
     <style>
 
         @font-face {
