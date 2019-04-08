@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^newld$', views.newld, name='newld'),
     url(r'^newclient$', views.newclient, name='newclient'),
     url(r'^queryld$', views.queryld, name='queryld'),
+    url(r'^archiv_querys$', views.archiv_querys, name='archiv_querys'),
 
 ]

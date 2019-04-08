@@ -1,3 +1,11 @@
+#logo_name {
+    float: left;
+    margin-left: 10px;
+    padding-top: 12px;
+    font-size: 19px;
+    color: #6E6E6E;
+}
+
 .date {
     color: grey;
     padding: 15px;
@@ -15,65 +23,35 @@ footer {
     width: 100%;
 }
 
-main {
-    padding: 0.5%;
-
-}
-
-.menu ul li {
-    display: inline-block;
-}
-
-.menu ul {
-    position: relative;
-    margin: 0;
-    padding: 0;
-}
-
-.menu ul ul {
-    display: none;
-    position: absolute;
-}
-
-.menu li:hover ul {
-    display: block;
-}
-
-.menu li:hover li {
-    display: block;
-}
-
-#raport ul li {
-    display: inline-block;
-}
-
-.menu ul {
-    position: relative;
-    margin: 0;
-    padding: 0;
-}
-
-#raport ul ul {
-    display: none;
-    position: absolute;
-}
-
-#raport li:hover ul {
-    display: block;
+#menu a {
+    border: 1px solid #D8D8D8;
+    border-radius: 8px;
+    margin-left: 10px;
 }
 
 #form_style p select {
     width: 100%;
+    border-radius: 8px;
+    height: 40px;
 }
 
 #form_style p input {
     width: 100%;
+    border-radius: 8px;
+    height: 40px;
 }
 
-#form_style_editld p input {
-    width: 300px;
+#form {
+    border: 1px solid #A4A4A4;
+    border-radius: 8px;
+    height: 70px;
+    padding-top: 20px;
+    background: #F2F2F2;
+    font-size: 16pt;
+    text-align: center;
+    color: #6E6E6E;
 }
 
-#form_style_editld p select {
-    width: 300px;
+#form p:nth-child(3n+1) {
+    background: red;
 }

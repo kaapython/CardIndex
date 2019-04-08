@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block name %} | Редактирование ЛД{% endblock name %}
+{% endblock title%}
+{% block menu %}
+    <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
+{% endblock menu %}
+{% block content %}
+<div class="container">
+    <div id="form">Список запросов ЛД</div><br>
+    {% for q in querys %}
+    <ul>
+        <li>{{ q.query_client }} {{ q.query_spec }}</li>
+    </ul>
+    {% endfor %}
+</div>
+{% endblock content %}

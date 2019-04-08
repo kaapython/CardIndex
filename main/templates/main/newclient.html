@@ -4,18 +4,17 @@
     {% block name %} | Добавление нового клиента{% endblock name %}
 {% endblock title%}
 {% block menu %}
-    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
-    <a class="navbar-brand" href="">|</a>
     <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
 {% endblock menu %}
 {% block content %}
 <div class="container">
-    <div style="font-size: 16pt; text-align: center;">Форма добавления ЛД:</div><br>
+    <div id="form">Форма добавления ЛД</div><br>
+    <hr>
     <form action="{% url 'main:newclient' %}" method='post'>
         {% csrf_token %}
         <div id="form_style">
         {{ form.as_p }}
-            <button class="btn btn-lg btn-primary btn-block" name="submit" style="width: 100%;">Добавить клиента</button>
+            <button class="btn btn-lg btn-primary btn-block" name="submit">Добавить клиента</button>
         </div>
     </form>
 </div>

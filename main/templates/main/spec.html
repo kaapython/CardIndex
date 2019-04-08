@@ -4,9 +4,7 @@
     {% block name %} | Рабочее место специалиста{% endblock name %}
 {% endblock title%}
 {% block menu %}
-    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
-    <a class="navbar-brand" href="">|</a>
-    <a class="navbar-brand" href="">Запрос ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:queryld' %}">Запрос ЛД</a>
     <a class="navbar-brand" href="">Вернуть ЛД</a>
     <a class="navbar-brand" href="{% url 'main:ldinjob' %}">ЛД в работе</a>
 {% endblock menu %}
@@ -66,7 +64,7 @@
                         <td>{{ i.spec }}</td>
                         {% endif %}
                         <td>
-                            <a id="sel" href="" class="btn btn-info">Запросить ЛД</a>
+                            <a href="{% url 'main:queryld' %}" class="btn btn-info">Запросить ЛД</a>
                         </td>
                     </tr>
                 </tbody>

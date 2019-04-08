@@ -1,20 +1,22 @@
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Запрос ЛД</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td scope="row">
-                <form action="{% url 'main:queryld' %}" method='post'>
-                    {% csrf_token %}
-                    <div id="form_style">
-                    {{ form.as_p }}
-                    <button name="submit" >Запрос</button>
-                    </div>
-                </form>
-            </td>
-        </tr>
-    </tbody>
-</table>
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block name %} | Редактирование ЛД{% endblock name %}
+{% endblock title%}
+{% block menu %}
+    <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
+{% endblock menu %}
+{% block content %}
+<div class="container">
+    <div id="form">Форма редактирования ЛД</div><br>
+    <hr>
+    <form action="{% url 'main:queryld' %}" method='post'>
+        {% csrf_token %}
+        <div id="form_style">
+        {{ form.as_p }}
+        <button class="btn btn-lg btn-primary btn-block" name="submit" >Запрос</button>
+        </div>
+    </form>
+    <br><hr><p>Внимание, все поля помеченные звездочкой, обязательны для заполнения.</p>
+</div>
+{% endblock content %}

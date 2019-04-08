@@ -3,14 +3,12 @@
         {% block name %} | Рабочее место архивариуса{% endblock name %}
     {% endblock title%}
 {% block menu %}
-    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
-    <a class="navbar-brand" href="">|</a>
-    <a class="navbar-brand" href="">Запросы ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:archiv_querys' %}">Запросы ЛД</a>
     <a class="navbar-brand" href="">Выдача ЛД</a>
     <a class="navbar-brand" href="">Поиск ЛД</a>
     <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить новое ЛД</a>
     <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
-{% endblock menu %}
+    {% endblock menu %}
 {% block content %}
 <div class="container-fluid">
     <div class="row" align="right">

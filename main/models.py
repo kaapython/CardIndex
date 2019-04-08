@@ -78,7 +78,7 @@ class Query(models.Model):
     """
     Запрос специалиста на работу с ЛД
     """
-    query_client = models.ForeignKey(CardIndex, blank=True, null=True, help_text='Личное дело')
-    query_spec = models.ForeignKey(UsersProfile, blank=True, null=True, help_text='Специалист')
-    query_ld = models.IntegerField(default=0, help_text='Статус запроса')
-    query_date = models.DateTimeField(default=None, blank=True, null=True, help_text='Время запроса')
+    query_client = models.ForeignKey(CardIndex, null=True, help_text='* Личное дело')
+    query_spec = models.ForeignKey(UsersProfile, null=True, help_text='* Специалист')
+    query_ld = models.BooleanField(default=False, blank=False, help_text='* Статус запроса')
+    query_date = models.DateField(default=None, null=True, help_text='* Дата запроса (01.01.2019)')

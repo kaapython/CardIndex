@@ -124,3 +124,11 @@ def queryld(request):
             return HttpResponseRedirect(reverse('main:main'))
     context = {'form': form}
     return render(request, 'main/queryld.html', context)
+
+
+@login_required
+@group_required("Архивариус")
+def archiv_querys(request):
+    """Просмотр всех запросов от специалистов"""
+    query = Query.objects.all()
+    return render(request, 'main/archiv_querys.html', {'querys': query})

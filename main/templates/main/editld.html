@@ -4,20 +4,17 @@
     {% block name %} | Редактирование ЛД{% endblock name %}
 {% endblock title%}
 {% block menu %}
-    <p class="navbar-brand">Картотека личных дел ОГКУ "УСЗН по Заларинскому району"</p>
-    <a class="navbar-brand" href="">|</a>
     <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
 {% endblock menu %}
 {% block content %}
-<div class="container-fluid">
-    <div style="font-size: 16pt; text-align: left;">Форма редактирования ЛД:</div><br>
+<div class="container">
+    <div id="form">Форма редактирования ЛД</div><br>
     <form action="{% url 'main:edit_ld' ld.id %}" method='post'>
         {% csrf_token %}
-    <div id="form_style_editld">
-        {{ form.as_p }}
-        <button class="btn btn-lg btn-primary btn-block" name="submit" style="width: 300px;">Сохранить изменения</button>
+        <div id="form_style">
+            {{ form.as_p }}
+            <button class="btn btn-lg btn-primary btn-block" name="submit">Сохранить изменения</button>
         </div>
     </form>
-
 </div>
 {% endblock content %}
