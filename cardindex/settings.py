@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'bootstrap3',
     # Apps CardIndex
     'main',
-    'users'
+    'users',
+    'accountability'
 ]
 
 MIDDLEWARE = [

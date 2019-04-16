@@ -55,3 +55,16 @@ footer {
 #form p:nth-child(3n+1) {
     background: red;
 }
+
+.panel-flt .list-group-item {
+    padding: 4px;
+}
+
+.panel-flt .list-group-item:hover {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#li li {
+    padding: 15px;
+}

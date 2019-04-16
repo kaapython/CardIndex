@@ -6,7 +6,7 @@
     <a class="navbar-brand" href="{% url 'main:archiv_querys' %}">Запросы ЛД</a>
     <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить новое ЛД</a>
     <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
-    <a class="navbar-brand" href="{% url 'main:accountability' %}">Отчетность</a>
+    <a class="navbar-brand" href="{% url 'accountability:accountability' %}">Отчетность</a>
     {% endblock menu %}
 {% block content %}
 <div class="container-fluid">
@@ -100,11 +100,11 @@
 </div>
 
 {% endblock content %}
-{% block script %}
+{% block scripts %}
 <script type="text/javascript" src="http://ajax.googleapis.com/..."></script>
 <script type="text/javascript">
 $('#sel').on('click',function(){
         $('#specialist').show();
 });
 </script>
-{% endblock script %}
+{% endblock scripts %}

@@ -143,6 +143,3 @@ def queryld(request):
 
     return render(request, 'main/queryld.html', {'query': query})
 
-def accountability(request):
-    '''Отчеты'''
-    return render(request, 'main/accountability.html')

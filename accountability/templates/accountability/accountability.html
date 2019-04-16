@@ -1,0 +1,81 @@
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block name %} | Отчетность{% endblock name %}
+{% endblock title%}
+{% block menu %}
+    <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
+    <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить нового ЛД</a>
+{% endblock menu %}
+{% block content %}
+<div class="container">
+<div id="form">Отчетность</div><br>
+    <hr>
+    <div class="row" id="li">
+        <div class="col-xs-6">
+            <div class="panel panel-default panel-flt">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Отчет по количеству действующих ЛД</h3>
+                </div>
+                <ul class="list-group">
+                    {% for ld in lds %}
+                        {% if request.user.is_superuser %}
+                            <li class="list-group-item" onclick="gen_stat('ld', {{ ld.pk }})">Получить</li>
+                        {% else %}
+                            {% if ld.pk == request.user.usersprofile.pk %}
+                                <li class="list-group-item" onclick="gen_stat('ld', {{ ld.pk }})">Получить</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default panel-flt">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Отчет ЛД, находящихся у специалистов</h3>
+                </div>
+                <ul class="list-group">
+                    {% for ld in lds %}
+                        {% if request.user.is_superuser %}
+                            <li class="list-group-item" onclick="gen_stat('spec', {{ ld.pk }})">Получить</li>
+                        {% else %}
+                            {% if ld.pk == request.user.usersprofile.pk %}
+                                <li class="list-group-item" onclick="gen_stat('spec', {{ ld.pk }})">Получить</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default panel-flt">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Отчет ЛД, находящихся в архиве</h3>
+                </div>
+                <ul class="list-group">
+                    {% for ld in lds %}
+                        {% if request.user.is_superuser %}
+                            <li class="list-group-item" onclick="gen_stat('archiv', {{ ld.pk }})">Получить</li>
+                        {% else %}
+                            {% if ld.pk == request.user.usersprofile.pk %}
+                                <li class="list-group-item" onclick="gen_stat('archiv', {{ ld.pk }})">Получить</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block scripts %}
+    <script src="/static/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        function gen_stat(stype, pk) {
+            window.open('statistic_xls?type=' + stype + "&pk=" + pk, '_blank');
+        }
+    </script>
+{% endblock scripts %}
