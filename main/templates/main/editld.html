@@ -5,10 +5,13 @@
 {% endblock title%}
 {% block menu %}
     <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить новое ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
 {% endblock menu %}
 {% block content %}
 <div class="container">
     <div id="form">Форма редактирования ЛД</div><br>
+    <hr>
     <form action="{% url 'main:edit_ld' ld.id %}" method='post'>
         {% csrf_token %}
         <div id="form_style">

@@ -5,10 +5,11 @@
 {% endblock title%}
 {% block menu %}
     <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить новое ЛД</a>
 {% endblock menu %}
 {% block content %}
 <div class="container">
-    <div id="form">Форма добавления ЛД</div><br>
+    <div id="form">Форма добавления клиента</div><br>
     <hr>
     <form action="{% url 'main:newclient' %}" method='post'>
         {% csrf_token %}

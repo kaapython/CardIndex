@@ -48,11 +48,13 @@
         </div>
     </nav>
     {% block footer %}
-        <footer>
-            <div align='center'>
-                <p class="text-muted"><br>&#169 "Все права защищены" {% now "Y" %} г.</p>
-            </div>
-        </footer>
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div align='center'>
+                    <footer>
+                        <p class="text-muted"><br>&#169 "Все права защищены" {% now "Y" %}г.</p>
+                    </footer>
+                </div>
+        </nav>
     {% endblock footer %}
 {% block content %}{% endblock content %}
 {% block script %}{% endblock script %}

@@ -4,10 +4,9 @@
     {% endblock title%}
 {% block menu %}
     <a class="navbar-brand" href="{% url 'main:archiv_querys' %}">Запросы ЛД</a>
-    <a class="navbar-brand" href="">Выдача ЛД</a>
-    <a class="navbar-brand" href="">Поиск ЛД</a>
     <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить новое ЛД</a>
     <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
+    <a class="navbar-brand" href="{% url 'main:accountability' %}">Отчетность</a>
     {% endblock menu %}
 {% block content %}
 <div class="container-fluid">
@@ -66,7 +65,7 @@
     </thead>
     <tbody>
         <tr>
-            <th class="col-xs-1"><a href="{% url 'main:ld' i.id %}">{{ i.ipd }}</a></th>
+            <th class="col-xs-1"><a href="{% url 'main:edit_ld' i.id %}">{{ i.ipd }}</a></th>
             <td class="col-xs-1">{{ i.client.last_name }}</td>
             <td class="col-xs-1">{{ i.client.first_name }}</td>
             <td class="col-xs-1">{{ i.client.middle_name }}</td>
@@ -82,7 +81,7 @@
             <td class="col-xs-1">{{ i.spec }}</td>
             {% endif %}
             <td class="col-xs-1">
-                <a href="{% url 'main:ld' i.id %}" class="btn btn-info">Изменить</a>
+                <a href="{% url 'main:edit_ld' i.id %}" class="btn btn-info">Редактировать ЛД</a>
             </td>
         </tr>
     </tbody>

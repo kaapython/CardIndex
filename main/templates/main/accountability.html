@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+{% block title %}
+    {% block name %} | Отчетность{% endblock name %}
+{% endblock title%}
+{% block menu %}
+    <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
+    <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
+    <a class="navbar-brand" href="{% url 'main:newld' %}">Добавить нового ЛД</a>
+{% endblock menu %}
+{% block content %}
+<div class="container">
+<div id="form">Отчетность</div><br>
+    <hr>
+    Отчет по количеству действующих ЛД <br>
+    Отчет ЛД, находящихся в архиве <br>
+    Отчет ЛД, находящихся у специалистов <br>
+</div>
+{% endblock content %}

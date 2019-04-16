@@ -7,8 +7,8 @@ from django.core.urlresolvers import reverse
 
 import re
 
-from main.models import CardIndex, Client, Control
-from users.models import UsersProfile, User
+from main.models import *
+from users.models import *
 from main.forms import *
 from main.decorators import group_required
 
@@ -25,7 +25,10 @@ def main(request):
     if request.user.is_superuser:
         return render(request, 'main/admin.html')
     if "Архивариус" in groups:
-        return render(request, 'main/archiv.html')
+        menu.append(
+            {'url': 'main:main', 'title': 'Поиск ЛД'}
+        )
+        return render(request, 'main/archiv.html', {'menu': menu})
     if "Специалист" in groups:
         return render(request, 'main/spec.html')
 
@@ -85,7 +88,7 @@ def ldinjob(request):
 @login_required
 @group_required("Архивариус")
 def newld(request):
-    """Добавление нового ЛД"""
+    '''Добавление нового ЛД'''
     if request.method != 'POST':
         form = AddLdForm()
     else:
@@ -112,7 +115,7 @@ def newclient(request):
     context = {'form': form}
     return render(request, 'main/newclient.html', context)
 
-
+"""
 def queryld(request):
     '''Функция запроса ЛД'''
     if request.method != 'POST':
@@ -124,11 +127,22 @@ def queryld(request):
             return HttpResponseRedirect(reverse('main:main'))
     context = {'form': form}
     return render(request, 'main/queryld.html', context)
-
+"""
 
 @login_required
 @group_required("Архивариус")
 def archiv_querys(request):
-    """Просмотр всех запросов от специалистов"""
+    '''Просмотр всех запросов от специалистов'''
     query = Query.objects.all()
     return render(request, 'main/archiv_querys.html', {'querys': query})
+
+
+def queryld(request):
+    '''Функция запроса ЛД'''
+    query = CardIndex.objects.all()
+
+    return render(request, 'main/queryld.html', {'query': query})
+
+def accountability(request):
+    '''Отчеты'''
+    return render(request, 'main/accountability.html')

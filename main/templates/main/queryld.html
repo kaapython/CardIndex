@@ -1,22 +1,48 @@
 {% extends "main/base.html" %}
 {% load bootstrap3 %}
 {% block title %}
-    {% block name %} | Редактирование ЛД{% endblock name %}
+    {% block name %} | Запрос ЛД{% endblock name %}
 {% endblock title%}
 {% block menu %}
     <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
 {% endblock menu %}
 {% block content %}
 <div class="container">
-    <div id="form">Форма редактирования ЛД</div><br>
+    <div id="form">Форма запроса ЛД</div><br>
     <hr>
     <form action="{% url 'main:queryld' %}" method='post'>
         {% csrf_token %}
         <div id="form_style">
-        {{ form.as_p }}
-        <button class="btn btn-lg btn-primary btn-block" name="submit" >Запрос</button>
+            <p>
+                <select name="query_client" required="" id="id_query_client">
+                    <option value="" selected="">---------</option>
+                {% for q in query %}
+                    <option value="1">{{ q.ipd }} {{ q.client }}</option>
+                {% endfor %}
+                </select>
+
+                <span class="helptext">* Личное дело</span>
+            </p>
+            <p>
+                <input type="text" name="query_date" required="" id="id_query_date">
+                <span class="helptext">* Дата запроса (01.01.2019)</span>
+            </p>
+            <p>
+                <input type="checkbox" name="query_ld" id="id_query_ld">
+                <span class="helptext">* Статус запроса</span>
+            </p>
+            <p>
+                <select name="query_spec" required="" id="id_query_spec">
+                <option value="1">{{ request.user.usersprofile }}</option>
+                </select> <span class="helptext">* Специалист</span>
+            </p>
+            <button class="btn btn-lg btn-primary btn-block" name="submit" >Запрос</button>
         </div>
     </form>
+
+
+
+
     <br><hr><p>Внимание, все поля помеченные звездочкой, обязательны для заполнения.</p>
 </div>
 {% endblock content %}
