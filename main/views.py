@@ -11,6 +11,7 @@ from main.models import *
 from users.models import *
 from main.forms import *
 from main.decorators import group_required
+from users.views import *
 
 # Create your views here.
 def index(request):
@@ -82,8 +83,11 @@ def edit_ld(request, ld_id):
 @login_required
 def ldinjob(request):
     """Выводит личные дела в работе специалиста"""
+    lds = CardIndex.objects.all()
     injob = CardIndex.objects.filter(spec=request.user.usersprofile).order_by('ipd')
-    return render(request, 'main/injob.html', {'injob': injob})
+    return render(request, 'main/injob.html', {'injob': injob, 'lds': lds})
+
+
 
 @login_required
 @group_required("Архивариус")
@@ -143,3 +147,6 @@ def queryld(request):
 
     return render(request, 'main/queryld.html', {'query': query})
 
+def accountability(request):
+    '''Отчеты'''
+    return render(request, 'main/accountability.html')

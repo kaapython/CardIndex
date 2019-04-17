@@ -7,7 +7,16 @@
 {% endblock menu %}
 {% block content %}
 <div class="container-fluid">
-    <h4 class='f-h' style="text-align: left;">Список ЛД, находящихся в работе специалиста:</h4><br>
+    <div class="row">
+        <div class="col-md-6"><h4 class='f-h' style="text-align: left;">Список ЛД, находящихся в работе специалиста:</h4><br></div>
+        <div class="col-md-2"  id="stat_spec">
+            {% for ld in lds %}
+                {% if ld.pk == request.user.usersprofile.pk %}
+                    <li class="list-group-item" onclick="gen_stat('spec', {{ ld.pk }})">Сформировать отчет</li>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
     <div>
         <table class="table table-bordered floatThead ct">
         <thead class="thead-dark">
@@ -46,3 +55,11 @@
 </div>
     {% endfor %}
 {% endblock content %}
+{% block scripts %}
+    <script src="/static/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        function gen_stat(stype, pk) {
+            window.open('statistic_xls?type=' + stype + "&pk=" + pk, '_blank');
+        }
+    </script>
+{% endblock scripts %}

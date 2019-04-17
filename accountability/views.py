@@ -41,11 +41,13 @@ def statistic_xls(request):
     borders.top = xlwt.Borders.THIN
     borders.bottom = xlwt.Borders.THIN
 
-    if tp == "ld":
+    if tp == "all_ld":
+        # Формирование отчетов по всем ЛД для архивариуса
+
         lds = CardIndex.objects.all()
         response['Content-Disposition'] = str.translate(
             "attachment; filename='Отчет по количеству действующих ЛД.xls'".format(), tr)
-        ws = wb.add_sheet('Всего ЛД')
+        ws = wb.add_sheet('Всего ЛД в картотеке')
 
         font_style_wrap = xlwt.XFStyle()
         font_style_wrap.alignment.wrap = 1
@@ -57,27 +59,76 @@ def statistic_xls(request):
         row = [
             ('ИПД', 4000),
             ('ФИО', 7000),
-            ('Контроль', 5000),
+            ('Контроль', 5500),
             ('Специалист', 9000),
         ]
 
         for i in range(len(row)):
-            ws.write(row_i, i, row[i][0])
+            ws.write(row_i, i, row[i][0], font_style_wrap)
             ws.col(i).width = row[i][1]
 
         row_i = 1
 
         for ld in lds:
-            row = [
-                str(ld.ipd),
-                str(ld.client),
-                str(ld.control),
-                str(ld.spec)
-            ]
+            if ld.spec == None:
+                row = [
+                    str(ld.ipd),
+                    str(ld.client),
+                    str(ld.control),
+                    'не назначен'
+                ]
+            else:
+                row = [
+                    str(ld.ipd),
+                    str(ld.client),
+                    str(ld.control),
+                    str(ld.spec)
+                ]
             for i in range(len(row)):
-                ws.write(row_i, i, row[i])
+                ws.write(row_i, i, row[i], font_style_wrap)
             row_i += 1
 
+    if tp == "spec":
+        # Формирование отчетов по специалистам
+
+        specs = CardIndex.objects.filter(spec=pk)
+        response['Content-Disposition'] = str.translate(
+            "attachment; filename='Отчет по количеству действующих ЛД.xls'".format(), tr)
+
+
+        ws = wb.add_sheet("ЛД в работе")
+
+        font_style_wrap = xlwt.XFStyle()
+        font_style_wrap.alignment.wrap = 1
+        font_style_wrap.borders = borders
+        font_style = xlwt.XFStyle()
+        font_style.borders = borders
+        row_i = 0
+        row = [
+            ('ИПД', 4000),
+            ('ФИО', 7000),
+            ('Адрес', 10000),
+            ('Статус', 5500),
+            ('Специалист', 9000),
+        ]
+
+        for i in range(len(row)):
+            ws.write(row_i, i, row[i][0], font_style_wrap)
+            ws.col(i).width = row[i][1]
+
+        row_i += 1
+
+        for s in specs:
+            row_s = [
+                str(s.ipd),
+                str(s.client),
+                str(s.client.address),
+                str(s.category),
+                str(s.spec),
+            ]
+            for i in range(len(row_s)):
+                ws.write(row_i, i, row_s[i], font_style_wrap)
+            row_i += 1
 
     wb.save(response)
     return response

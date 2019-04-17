@@ -2,6 +2,7 @@
 
 from django.conf.urls import url
 from . import views
+from accountability.views import statistic_xls as statistic_xls
 
 urlpatterns = [
     # Домашняя страница
@@ -15,5 +16,6 @@ urlpatterns = [
     url(r'^newclient$', views.newclient, name='newclient'),
     url(r'^queryld$', views.queryld, name='queryld'),
     url(r'^archiv_querys$', views.archiv_querys, name='archiv_querys'),
+    url(r'^statistic_xls', statistic_xls, name='statistic_xls'),
 
 ]

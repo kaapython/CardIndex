@@ -68,3 +68,8 @@ footer {
 #li li {
     padding: 15px;
 }
+
+#stat_spec li {
+    cursor: pointer;
+    text-align: center
+}
