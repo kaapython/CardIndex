@@ -13,7 +13,7 @@
     <div id="form">Список запросов ЛД</div><br>
     {% for q in querys %}
     <ul style="margin-top: 15px;">
-        <li><{{ q.query_client }} | {{ q.query_spec }}
+        <li>Личное дело: {{ q.query_client }}. Назначить в работу специалисту: {{ q.query_spec }}.
             <div style="float: right;"><a href="{% url 'main:edit_ld' q.query_client.id %}" class="btn btn-info">Назначить ЛД</a></div>
         </li>
     </ul>

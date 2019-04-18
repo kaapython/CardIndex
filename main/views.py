@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-import re
+import datetime
 
 from main.models import *
 from users.models import *
@@ -141,7 +141,7 @@ def queryld(request):
 @group_required("Архивариус")
 def archiv_querys(request):
     '''Просмотр всех запросов от специалистов'''
-    query = Query.objects.all()
+    query = Query.objects.filter(query_date=datetime.date.today())
     return render(request, 'main/archiv_querys.html', {'querys': query})
 
 """
