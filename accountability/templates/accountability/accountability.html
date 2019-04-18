@@ -49,24 +49,42 @@
                 </ul>
             </div>
         </div>
-        <!--<div class="col-xs-6">-->
-            <!--<div class="panel panel-default panel-flt">-->
-                <!--<div class="panel-heading">-->
-                    <!--<h3 class="panel-title">Отчет ЛД, находящихся в архиве</h3>-->
-                <!--</div>-->
-                <!--<ul class="list-group">-->
-                    <!--{% for ld in lds %}-->
-                        <!--{% if request.user.is_superuser %}-->
-                            <!--<li class="list-group-item" onclick="gen_stat('archiv', {{ ld.pk }})">Получить</li>-->
-                        <!--{% else %}-->
-                            <!--{% if ld.pk == request.user.usersprofile.pk %}-->
-                                <!--<li class="list-group-item" onclick="gen_stat('archiv', {{ ld.pk }})">Получить</li>-->
-                            <!--{% endif %}-->
-                        <!--{% endif %}-->
-                    <!--{% endfor %}-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div class="col-xs-6">
+            <div class="panel panel-default panel-flt">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Отчет ЛД, находящихся в архиве</h3>
+                </div>
+                <ul class="list-group">
+                    {% for ld in lds %}
+                        {% if request.user.is_superuser %}
+                            <li class="list-group-item" onclick="gen_stat('archiv', {{ ld.pk }})">Получить</li>
+                        {% else %}
+                            {% if ld.pk == request.user.usersprofile.pk %}
+                                <li class="list-group-item" onclick="gen_stat('archiv', {{ ld.pk }})">Получить</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default panel-flt">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Отчет ЛД, находящихся в других учреждениях</h3>
+                </div>
+                <ul class="list-group">
+                    {% for ld in lds %}
+                        {% if request.user.is_superuser %}
+                            <li class="list-group-item" onclick="gen_stat('offsite', {{ ld.pk }})">Получить</li>
+                        {% else %}
+                            {% if ld.pk == request.user.usersprofile.pk %}
+                                <li class="list-group-item" onclick="gen_stat('offsite', {{ ld.pk }})">Получить</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 

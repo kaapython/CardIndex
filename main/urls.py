@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^newclient$', views.newclient, name='newclient'),
     url(r'^queryld$', views.queryld, name='queryld'),
     url(r'^archiv_querys$', views.archiv_querys, name='archiv_querys'),
+    url(r'^archiv_querys/(?P<query_ipd>\d+)/$', views.queryld, name='queryld'),
     url(r'^statistic_xls', statistic_xls, name='statistic_xls'),
 
 ]

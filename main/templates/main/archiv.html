@@ -73,9 +73,9 @@
             <td class="col-xs-2">{{ i.client.address }}</td>
             <td class="col-xs-1">{{ i.category }}</td>
             <td class="col-xs-1">{{ i.control }}</td>
-            {% if i.control.check_mark == 'в архиве'%}
+            {% if i.control.id == 6 %}
             <td class="col-xs-1"></td>
-            {% elif i.control.check_mark == 'передано в др. уч.' %}
+            {% elif i.control.id == 3 %}
             <td class="col-xs-1">{{ i.info }}</td>
             {% else %}
             <td class="col-xs-1">{{ i.spec }}</td>

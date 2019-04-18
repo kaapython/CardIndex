@@ -10,14 +10,14 @@
 <div class="container">
     <div id="form">Форма запроса ЛД</div><br>
     <hr>
-    <form action="{% url 'main:queryld' %}" method='post'>
+    <form action="" method='post'>
         {% csrf_token %}
         <div id="form_style">
             <p>
                 <select name="query_client" required="" id="id_query_client">
                     <option value="" selected="">---------</option>
                 {% for q in query %}
-                    <option value="1">{{ q.ipd }} {{ q.client }}</option>
+                    <option value="{{ q.id }}">{{ q.ipd }} {{ q.client }}</option>
                 {% endfor %}
                 </select>
 
@@ -33,16 +33,38 @@
             </p>
             <p>
                 <select name="query_spec" required="" id="id_query_spec">
-                <option value="1">{{ request.user.usersprofile }}</option>
+                {% for u in users %}
+                    <option value="{{ u.id }}">{{ u.fio }}</option>
+                    {% endfor %}
                 </select> <span class="helptext">* Специалист</span>
             </p>
             <button class="btn btn-lg btn-primary btn-block" name="submit" >Запрос</button>
         </div>
     </form>
-
-
-
+    <!--<form action="{% url 'main:queryld' %}" method='post'>-->
+        <!--{% csrf_token %}-->
+        <!--<div id="form_style">-->
+        <!--{{ form.as_p }}-->
+            <!--<button class="btn btn-lg btn-primary btn-block" name="submit" style="width: 100%;">Запрос ЛД</button>-->
+        <!--</div>-->
+    <!--</form>-->
 
     <br><hr><p>Внимание, все поля помеченные звездочкой, обязательны для заполнения.</p>
 </div>
 {% endblock content %}
+{% block scripts %}
+<script>
+$('form').on('click', 'p[name="submit"]', function () {
+var data = $(this).parents('form').serialize();
+
+    $.ajax({
+        url: "queryld",
+        type:"GET",
+        data: form.serialize(),
+        dataType:"html",
+        beforeSend:funcBeforeinfoNewItemsProdaj,
+        success: funcSuccessinfoNewItemsProdaj
+      });
+});
+</script>
+{% endblock scripts %}

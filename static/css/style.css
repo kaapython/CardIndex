@@ -1,3 +1,7 @@
+body li {
+    list-style-type: none
+}
+
 #logo_name {
     float: left;
     margin-left: 10px;

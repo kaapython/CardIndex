@@ -119,19 +119,23 @@ def newclient(request):
     context = {'form': form}
     return render(request, 'main/newclient.html', context)
 
-"""
+@login_required
 def queryld(request):
     '''Функция запроса ЛД'''
+    #q = request.user.usersprofile
+    users = UsersProfile.objects.all()
+    #users = UsersProfile.objects.order_by(q)
+    query = CardIndex.objects.all()
     if request.method != 'POST':
         form = AddQueryLdForm()
     else:
-        form = AddQueryLdForm(request.POST)
+        form = AddQueryLdForm(data=request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('main:main'))
-    context = {'form': form}
+    context = {'form': form, 'query': query, 'users': users}
     return render(request, 'main/queryld.html', context)
-"""
+
 
 @login_required
 @group_required("Архивариус")
@@ -140,12 +144,13 @@ def archiv_querys(request):
     query = Query.objects.all()
     return render(request, 'main/archiv_querys.html', {'querys': query})
 
-
+"""
 def queryld(request):
     '''Функция запроса ЛД'''
     query = CardIndex.objects.all()
 
     return render(request, 'main/queryld.html', {'query': query})
+"""
 
 def accountability(request):
     '''Отчеты'''

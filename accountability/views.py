@@ -93,7 +93,7 @@ def statistic_xls(request):
 
         specs = CardIndex.objects.filter(spec=pk)
         response['Content-Disposition'] = str.translate(
-            "attachment; filename='Отчет по количеству действующих ЛД.xls'".format(), tr)
+            "attachment; filename='Отчет по специалисту.xls'".format(), tr)
 
 
         ws = wb.add_sheet("ЛД в работе")
@@ -125,6 +125,90 @@ def statistic_xls(request):
                 str(s.client.address),
                 str(s.category),
                 str(s.spec),
+            ]
+            for i in range(len(row_s)):
+                ws.write(row_i, i, row_s[i], font_style_wrap)
+            row_i += 1
+
+    if tp == "archiv":
+        # Формирование отчетов находищихся в архиве
+
+        archiv = CardIndex.objects.filter(control__id=6)
+        response['Content-Disposition'] = str.translate(
+            "attachment; filename='Отчет ЛД находящихся в архиве.xls'".format(), tr)
+
+
+        ws = wb.add_sheet("ЛД в архиве")
+
+        font_style_wrap = xlwt.XFStyle()
+        font_style_wrap.alignment.wrap = 1
+        font_style_wrap.borders = borders
+        font_style = xlwt.XFStyle()
+        font_style.borders = borders
+        row_i = 0
+        row = [
+            ('ИПД', 4000),
+            ('ФИО', 7000),
+            ('Адрес', 10000),
+            ('Статус', 5500),
+            ('Движение ЛД', 4000),
+        ]
+
+        for i in range(len(row)):
+            ws.write(row_i, i, row[i][0], font_style_wrap)
+            ws.col(i).width = row[i][1]
+
+        row_i += 1
+
+        for arch in archiv:
+            row_s = [
+                str(arch.ipd),
+                str(arch.client),
+                str(arch.client.address),
+                str(arch.category),
+                str(arch.control),
+            ]
+            for i in range(len(row_s)):
+                ws.write(row_i, i, row_s[i], font_style_wrap)
+            row_i += 1
+
+    if tp == "offsite":
+        # Формирование отчетов находящихся в др. уч.
+
+        offsite = CardIndex.objects.filter(control__id=3)
+        response['Content-Disposition'] = str.translate(
+            "attachment; filename='Отчет ЛД находящихся в других учреждениях.xls'".format(), tr)
+
+
+        ws = wb.add_sheet("ЛД в др. уч.")
+
+        font_style_wrap = xlwt.XFStyle()
+        font_style_wrap.alignment.wrap = 1
+        font_style_wrap.borders = borders
+        font_style = xlwt.XFStyle()
+        font_style.borders = borders
+        row_i = 0
+        row = [
+            ('ИПД', 4000),
+            ('ФИО', 7000),
+            ('Адрес', 10000),
+            ('Статус', 5500),
+            ('Движение ЛД', 5000),
+        ]
+
+        for i in range(len(row)):
+            ws.write(row_i, i, row[i][0], font_style_wrap)
+            ws.col(i).width = row[i][1]
+
+        row_i += 1
+
+        for off in offsite:
+            row_s = [
+                str(off.ipd),
+                str(off.client),
+                str(off.client.address),
+                str(off.category),
+                str(off.control),
             ]
             for i in range(len(row_s)):
                 ws.write(row_i, i, row_s[i], font_style_wrap)
