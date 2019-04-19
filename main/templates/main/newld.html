@@ -1,11 +1,11 @@
 {% extends "main/base.html" %}
-{% load bootstrap3 %}
 {% block title %}
     {% block name %} | Добавление нового ЛД{% endblock name %}
 {% endblock title%}
 {% block menu %}
     <a class="navbar-brand" href="{% url 'main:main' %}">Поиск ЛД</a>
     <a class="navbar-brand" href="{% url 'main:newclient' %}">Добавить нового клиента</a>
+    <a class="navbar-brand" href="{% url 'accountability:accountability' %}">Отчетность</a>
 {% endblock menu %}
 {% block content %}
 <div class="container">
